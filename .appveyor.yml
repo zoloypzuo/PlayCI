@@ -22,7 +22,6 @@ install:
   - .\bootstrap-vcpkg.bat -disableMetrics
   - vcpkg.exe integrate install
   - vcpkg.exe install sqlite3:x86-windows
-  - mklink /D /J C:\projects\zeloengine\ThirdParty\Vcpkg c:\tools\vcpkg\
 
 before_build:
   - cd C:\projects\zeloengine
