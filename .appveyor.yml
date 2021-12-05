@@ -21,7 +21,7 @@ install:
   - cmd: cd C:\Tools\vcpkg
   - cmd: .\bootstrap-vcpkg.bat -disableMetrics
   - cmd: vcpkg.exe integrate install
-  - cmd: vcpkg.exe install --triplet x86-windows-static sqlite3
+  - cmd: vcpkg.exe install --triplet x86-windows sqlite3
   - cmd: mklink /D /J C:\projects\zeloengine\ThirdParty\Vcpkg c:\tools\vcpkg\
 
 before_build:
