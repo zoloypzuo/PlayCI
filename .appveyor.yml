@@ -1,5 +1,3 @@
-shallow_clone: false
-
 environment:
   matrix:
   - COMPILER: MSVC_16
@@ -24,7 +22,7 @@ install:
   - vcpkg.exe install sqlite3:x86-windows
 
 before_build:
-  - cd C:\projects\zeloengine
+  - cd C:\projects\playeci
   - IF "%ARCHITECTURE%" == "x86" IF "%COMPILER%" == "MSVC_16" call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\vsdevcmd.bat" -arch=x86 -host_arch=x64
 #  - IF "%ARCHITECTURE%" == "x64" IF "%COMPILER%" == "MSVC_16" call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\vsdevcmd.bat" -arch=x64 -host_arch=x64
 
