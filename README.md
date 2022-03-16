@@ -1,3 +1,3 @@
 # PlayCI
  
-342
+342 mini
