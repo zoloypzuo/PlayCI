@@ -1,29 +1,34 @@
-environment:
-  matrix:
-  - COMPILER: MSVC_16
-    ARCHITECTURE: x86
-    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2019
+# build config: Ninja/Visual Studio 2019/Win32/x86/Debug
+image:
+  - Visual Studio 2019
 
-build:
-  verbosity: detailed
-  parallel: true
+branches:
+  except:
+    - gh-pages
+
+environment:
+  APPVEYOR_SAVE_CACHE_ON_ERROR: true
+
+  matrix:
+    - cmake_args: -DCMAKE_SYSTEM_VERSION="10.0.18362.0"
+
+clone_folder: c:\projects\zeloengine
 
 cache:
-  - c:\tools\vcpkg\installed\
+  - c:\tools\vcpkg\installed
+  - c:\projects\zeloengine\dep
 
 install:
-  - cd c:\Tools\vcpkg
-  - git pull
-  - .\bootstrap-vcpkg.bat -disableMetrics
-  - vcpkg.exe integrate install
-  - vcpkg.exe install sqlite3:x86-windows
+  - cd c:\projects\zeloengine
+  - tools\setup\setup_appveyor.bat
 
 before_build:
-  - cd c:\projects\playci
-  - IF "%ARCHITECTURE%" == "x86" IF "%COMPILER%" == "MSVC_16" call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\vsdevcmd.bat" -arch=x86 -host_arch=x64
+  - cd c:\projects\zeloengine
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\vsdevcmd.bat" -arch=x86 -host_arch=x64
+  - echo.%cmake_args%
+  - cmake %cmake_args% -S . -B ./build -G Ninja
 
 build_script:
-  - mkdir build_vs2019
-  - cd build_vs2019
-  - cmake -DCMAKE_GENERATOR_PLATFORM=win32 -DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake -G  "Visual Studio 16" ..
-  - cmake --build . --config debug -j 18
+  - cd c:\projects\zeloengine
+  - cd build
+  - cmake --build .
